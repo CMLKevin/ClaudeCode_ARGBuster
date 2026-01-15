@@ -1,6 +1,12 @@
 # ClaudeCode ARGBuster
 
-Advanced ARG (Alternate Reality Game) investigation toolkit for Claude Code with specialized agents for steganography, cryptanalysis, OSINT, media forensics, and web analysis.
+Advanced ARG (Alternate Reality Game) investigation toolkit for Claude Code. Features 6 specialized **opus-powered** agents that **investigate directly** - cracking puzzles through original analysis, not by searching for existing solutions.
+
+## Philosophy
+
+> **"BE RELENTLESS. BE THOROUGH. CRACK THE ARG."**
+
+This toolkit prioritizes **direct investigation over community search**. The agents probe, analyze, decode, and follow puzzle chains themselves - only referencing community findings after exhausting original investigation.
 
 ## Installation
 
@@ -22,33 +28,33 @@ claude
 
 ---
 
-## Agents (6 Total)
+## Agents (6 Total) - All Opus-Powered
 
 ### 1. ARG Orchestrator (`agents/arg-orchestrator.md`)
 | Model | Color | Role |
 |-------|-------|------|
-| opus | magenta | Main coordinator - plans investigations, deploys specialists |
+| **opus** | magenta | Master coordinator - directs investigations, deploys specialists |
 
 **Capabilities:**
-- Creates master investigation log
+- **Direct site investigation** using browser automation
+- Automated path probing (50+ common ARG paths)
 - Deploys subagents in parallel
-- Searches ARG communities (Reddit, ARGNet, Game Detectives)
-- Synthesizes findings, tracks puzzle chains
-- Generates comprehensive reports
+- Recursive chain following
+- Real-time documentation
 
-**5-Phase Protocol:**
-1. Community Research → 2. Initial Assessment → 3. Parallel Analysis → 4. Cross-Reference → 5. Reporting
+**6-Phase Investigation Protocol:**
+1. **Direct Reconnaissance** → 2. Aggressive Content Analysis → 3. Decode Everything → 4. Recursive Investigation → 5. Cross-Link Analysis → 6. Community Reference (LAST)
 
 ---
 
 ### 2. Stego Analyst (`agents/stego-analyst.md`)
 | Model | Color | Role |
 |-------|-------|------|
-| sonnet | cyan | Steganography detection & extraction |
+| **opus** | cyan | Steganography detection & extraction |
 
 **Capabilities:**
-- **Image**: LSB extraction, color channel separation, bit plane analysis
-- **Audio**: Spectrogram generation, phase analysis, reversed audio
+- **Image**: LSB extraction (all channels), color channel separation, bit plane analysis
+- **Audio**: Spectrogram generation (multiple ranges), phase analysis, reversed audio
 - **Tools**: exiftool, binwalk, sox, convert, zbarimg, tesseract
 
 ---
@@ -56,13 +62,13 @@ claude
 ### 3. Crypto Decoder (`agents/crypto-decoder.md`)
 | Model | Color | Role |
 |-------|-------|------|
-| sonnet | yellow | Cryptanalysis & encoding detection |
+| **opus** | yellow | Cryptanalysis & multi-layer decoding |
 
 **Supported Encodings:**
 | Category | Types |
 |----------|-------|
 | Modern | Base64, Hex, Binary, URL, HTML entities |
-| Classical | Caesar/ROT, Vigenère, Atbash, Substitution |
+| Classical | Caesar/ROT (all 26), Vigenère, Atbash, Substitution |
 | Numeric | A1Z26, ASCII, Phone keypad (T9) |
 | Symbolic | Morse, Braille, Semaphore, Pigpen |
 
@@ -71,49 +77,54 @@ claude
 ### 4. OSINT Recon (`agents/osint-recon.md`)
 | Model | Color | Role |
 |-------|-------|------|
-| sonnet | green | Open source intelligence gathering |
+| **opus** | green | Open source intelligence gathering |
 
-**Research:** WHOIS, DNS, SSL certs, subdomains, Wayback Machine, identity search
+**Research:** WHOIS, DNS records, SSL certs (crt.sh), subdomains, Wayback Machine, identity search
 
 ---
 
 ### 5. Media Forensics (`agents/media-forensics.md`)
 | Model | Color | Role |
 |-------|-------|------|
-| sonnet | red | Deep file forensic analysis |
+| **opus** | red | Deep file forensic analysis |
 
-**Capabilities:** Magic bytes validation, embedded file extraction, metadata, QR/OCR, hash verification
+**Capabilities:** Magic bytes validation, embedded file extraction (binwalk/foremost), metadata analysis, QR/OCR detection, hash verification
 
 ---
 
 ### 6. Web Analyst (`agents/web-analyst.md`)
 | Model | Color | Role |
 |-------|-------|------|
-| sonnet | blue | Web analysis + browser automation |
+| **opus** | blue | Web analysis + browser automation |
 
-**Targets:** HTML comments, hidden elements, data attributes, JS variables, console messages, localStorage
+**Mandatory Investigation Protocol:**
+1. Extract ALL hidden elements (multiple detection methods)
+2. Probe common secret paths
+3. Analyze raw source code (Base64, hex, comments)
+4. Click everything interactive
+5. Recursive investigation of all discovered URLs
 
-**Browser Automation** (claude-in-chrome MCP): `read_page`, `javascript_tool`, `read_console_messages`
+**Browser Automation** (claude-in-chrome MCP): `read_page`, `javascript_tool`, `read_console_messages`, `navigate`
 
 ---
 
 ## Commands (3 Total)
 
-| Command | File | Description |
-|---------|------|-------------|
-| `/arg [target]` | `commands/arg.md` | Full ARG investigation workflow |
-| `/decode [text]` | `commands/decode.md` | Quick multi-encoding decode |
-| `/stego:spectrogram [audio]` | `commands/stego/spectrogram.md` | Generate audio spectrograms |
+| Command | Description |
+|---------|-------------|
+| `/arg [target]` | Full ARG investigation workflow |
+| `/decode [text]` | Quick multi-encoding decode |
+| `/stego:spectrogram [audio]` | Generate audio spectrograms |
 
 ---
 
 ## Skills (3 Total)
 
-| Skill | File | Triggers |
-|-------|------|----------|
-| **Cipher Identification** | `skills/cipher-identification/SKILL.md` | Encoded text, "decode this" |
-| **Puzzle Chain Tracking** | `skills/puzzle-chain-tracking/SKILL.md` | "what did we find", investigation state |
-| **ARG Patterns** | `skills/arg-patterns/SKILL.md` | "typical ARG puzzles", guidance |
+| Skill | Triggers |
+|-------|----------|
+| **Cipher Identification** | Encoded text, "decode this" |
+| **Puzzle Chain Tracking** | "what did we find", investigation state |
+| **ARG Patterns** | "typical ARG puzzles", hiding techniques |
 
 ---
 
@@ -121,7 +132,7 @@ claude
 
 | Script | Purpose |
 |--------|---------|
-| `scripts/lsb-extract.py` | LSB steganography extraction from images |
+| `scripts/lsb-extract.py` | LSB steganography extraction |
 | `scripts/metadata-extract.sh` | Comprehensive metadata dump |
 
 ---
@@ -130,23 +141,23 @@ claude
 
 ```
 ~/Downloads/ARG_Investigation/
-├── reports/        # Auto-generated reports
+├── reports/        # Auto-generated investigation reports
 ├── spectrograms/   # Audio spectrograms
-├── extracted/      # Extracted files
-└── logs/           # Analysis logs
+├── extracted/      # Downloaded & extracted files
+└── logs/           # Raw analysis logs
 ```
 
 ---
 
 ## Auto-Documentation
 
-All agents write findings in real-time:
+All agents document findings in real-time:
 
 | Agent | Report Pattern | Finding Types |
 |-------|----------------|---------------|
-| Orchestrator | `investigation-*.md` | 🔗 🔓 🖼️ 📁 🔍 💡 ❌ ✅ |
+| Orchestrator | `investigation-*.md` | 🔗 🔓 🖼️ 📁 💬 👻 📊 🖥️ 💡 ✅ |
 | Stego | `stego-*.md` | 🖼️ 🎵 📁 📝 🔲 ❌ |
-| Crypto | `crypto-*.md` | 🔓 (with decode chain) |
+| Crypto | `crypto-*.md` | 🔓 (with full decode chain) |
 | OSINT | `osint-*.md` | 🌐 📡 🔐 📜 🔗 👤 |
 | Forensics | `forensics-*.md` | 📁 📝 🔲 📖 ⚠️ 🔀 |
 | Web | `web-*.md` | 💬 👻 📊 🔗 📜 🖥️ 📦 |
@@ -165,20 +176,42 @@ pip3 install pillow
 
 ---
 
+## Recommended Claude Code Settings
+
+Add these permissions to `~/.claude/settings.json` for unrestricted web fetching:
+
+```json
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl:*)",
+      "Bash(wget:*)"
+    ]
+  }
+}
+```
+
+> **Note:** The built-in `WebFetch` tool has domain verification that may fail on some networks. Using `curl` via Bash bypasses this limitation and provides more control over headers, cookies, and redirects.
+
+---
+
 ## Architecture
 
 ```
 User Request → ARG Orchestrator (opus)
                       │
+                      │ INVESTIGATE FIRST
+                      │
        ┌──────┬──────┬┴─────┬──────┐
        ▼      ▼      ▼      ▼      ▼
     Stego  Crypto  OSINT  Media   Web
-   (cyan) (yellow)(green) (red)  (blue)
+   (opus) (opus)  (opus) (opus) (opus)
        │      │      │      │      │
        └──────┴──────┴──────┴──────┘
                       │
                       ▼
          ~/Downloads/ARG_Investigation/
+              (Real-time reports)
 ```
 
 ---
@@ -186,7 +219,7 @@ User Request → ARG Orchestrator (opus)
 ## Example
 
 ```bash
-# Investigate mysterious website
+# Investigate mysterious website (direct analysis, not search)
 /arg https://mysterious-arg.com
 
 # Decode suspicious text
@@ -198,7 +231,19 @@ User Request → ARG Orchestrator (opus)
 
 ---
 
+## What Makes This Different
+
+| Traditional Approach | ARGBuster Approach |
+|---------------------|-------------------|
+| Search for solutions first | **Investigate directly first** |
+| Look up community writeups | **Crack puzzles yourself** |
+| Single-page analysis | **Recursive chain following** |
+| Manual path checking | **Automated 50+ path probing** |
+| Passive investigation | **Aggressive content analysis** |
+
+---
+
 **Author:** Kevin Lin
-**Version:** 1.0.0
+**Version:** 1.1.0
 
 *"The truth is out there... hidden in LSBs, spectrograms, and Base64."*
