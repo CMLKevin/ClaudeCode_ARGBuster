@@ -1,0 +1,9 @@
+{
+  "name": "ClaudeCode_ARGBuster",
+  "description": "Advanced ARG (Alternate Reality Game) investigation toolkit with specialized agents for steganography, cryptanalysis, OSINT, media forensics, and web analysis. Coordinates multi-phase investigations using parallel subagents. Created by Claude Code.",
+  "author": {
+    "name": "Kevin Lin"
+  },
+  "version": "1.0.0",
+  "category": "investigation"
+}
