@@ -302,6 +302,122 @@ Report saved to: ~/Downloads/ARG_Investigation/reports/crypto-[timestamp].md
 
 Always cross-reference decoded content with known ARG narrative elements.
 
+## 🔍 Community Cross-Reference & Novel Discovery
+
+**After EACH successful decode, cross-reference with community:**
+
+### Cross-Reference Protocol
+
+```bash
+# Search if this decoded content is known
+WebSearch: "[decoded plaintext] ARG"
+WebSearch: "[decoded plaintext] [ARG name]"
+WebSearch: "[original cipher] solution decoded"
+WebSearch: "[ARG name] cipher [encoding type] solved"
+
+# Log cross-reference
+cat >> "$ARG_DIR/clues/CRYPTO_CROSS_REFERENCE.md" << 'XREF'
+## [TIMESTAMP] - Crypto Cross-Reference
+
+**Original Cipher**: [truncated encoded text]
+**Encoding Chain**: [e.g., Base64 → ROT13 → Plaintext]
+**Decoded Result**: [plaintext]
+**Community Status**: [KNOWN/UNKNOWN/PARTIAL]
+**Search Queries**: [what you searched]
+**Novel?**: [YES if no community mentions]
+
+---
+XREF
+```
+
+### Identify Novel Decodes
+
+```bash
+# Track novel cryptographic discoveries
+cat >> "$ARG_DIR/clues/NOVEL_CRYPTO_DISCOVERIES.md" << 'NOVEL'
+## 🆕 Novel Decode - [TIMESTAMP]
+
+**Cipher**: [original encoded text]
+**Solution**: [decoded plaintext]
+**Encoding Chain**: [step by step decode]
+**Why Novel**:
+- Searched "[decoded text]" - no results
+- Searched "[cipher pattern] [ARG]" - no solutions found
+**What Community Missed**: [why they didn't solve it]
+**Significance**: [what this reveals]
+
+---
+NOVEL
+```
+
+### Prioritize Unexplored Cipher Vectors
+
+**Focus on encodings the community hasn't cracked:**
+
+| Encoding Type | Community Tried? | Your Priority |
+|---------------|------------------|---------------|
+| Standard Base64 | Usually | LOW |
+| Base64 variants (URL-safe) | Sometimes | MEDIUM |
+| Multi-layer encoding | Often missed | HIGH |
+| ROT variations (not ROT13) | Rarely | HIGH |
+| Vigenère with unknown key | Hard, often stuck | HIGH |
+| Custom substitution | Rarely solved | HIGH |
+| Steganographic + Crypto combo | Very rare | CRITICAL |
+
+```bash
+# Document unexplored cipher vectors
+cat >> "$ARG_DIR/clues/UNEXPLORED_CIPHER_VECTORS.md" << 'VECTORS'
+## Unexplored Cipher Vectors - [ARG NAME]
+
+### Encodings Community Hasn't Cracked
+- [ ] [Cipher 1] - Community tried [X], try [Y] instead
+- [ ] [Cipher 2] - Possible multi-layer, try different order
+- [ ] [Cipher 3] - Unknown key, try [keyword guesses]
+
+### Alternative Decode Approaches
+1. **Different decode order**: Instead of A→B→C, try C→A→B
+2. **Partial decode**: Decode parts, not whole string
+3. **Context clues for keys**: Look for key hints in [location]
+
+### Community Stuck Points
+- [What cipher community can't solve]
+- [Your approach to crack it]
+
+---
+VECTORS
+```
+
+### Cipher Key Discovery
+
+**If community is stuck on keyed ciphers, hunt for keys:**
+
+```bash
+# Search for potential cipher keys in ARG context
+WebSearch: "[ARG name] password hint"
+WebSearch: "[ARG name] cipher key clue"
+WebSearch: "[character name] [ARG name]"  # Character names often keys
+WebSearch: "[location name] [ARG name]"   # Location names often keys
+
+# Log key hunting
+cat >> "$ARG_DIR/clues/CIPHER_KEY_HUNT.md" << 'KEYS'
+## Cipher Key Candidates - [TIMESTAMP]
+
+**Target Cipher**: [what needs a key]
+**Possible Keys Found**:
+1. [candidate 1] - Source: [where found]
+2. [candidate 2] - Source: [where found]
+
+**Key Testing Results**:
+- [key 1]: [result]
+- [key 2]: [result]
+
+**Community Tried**: [what keys community already tested]
+**Novel Keys to Try**: [your unique key guesses]
+
+---
+KEYS
+```
+
 ## Community Cross-Reference
 
 After decoding ANY content, search for community context:

@@ -308,3 +308,86 @@ Provide analysis results as:
 4. **Basic ARG**: Simple LSB with Base64 encoded messages
 
 Always check for **layered encoding** - extracted LSB data may itself be Base64, hex, or otherwise encoded.
+
+## 🔍 Community Cross-Reference & Novel Discovery
+
+**After EACH steganography finding, cross-reference with community:**
+
+### Cross-Reference Protocol
+
+```bash
+# Search if this stego finding is known
+WebSearch: "[filename] steganography ARG"
+WebSearch: "[filename] hidden message spectrogram"
+WebSearch: "[ARG name] LSB hidden data"
+WebSearch: "[ARG name] audio spectrogram image"
+
+# Log cross-reference
+cat >> "$ARG_DIR/clues/STEGO_CROSS_REFERENCE.md" << 'XREF'
+## [TIMESTAMP] - Stego Cross-Reference
+
+**File Analyzed**: [filename]
+**Technique Used**: [LSB/spectrogram/binwalk/etc]
+**Your Finding**: [what you discovered]
+**Community Status**: [KNOWN/UNKNOWN/PARTIAL]
+**Search Queries**: [what you searched]
+**Novel?**: [YES if no community mentions]
+
+---
+XREF
+```
+
+### Identify Novel Stego Findings
+
+```bash
+# Track novel steganography discoveries
+cat >> "$ARG_DIR/clues/NOVEL_STEGO_DISCOVERIES.md" << 'NOVEL'
+## 🆕 Novel Stego Finding - [TIMESTAMP]
+
+**File**: [filename]
+**Technique**: [how you found it]
+**Discovery**: [what was hidden]
+**Why Novel**:
+- Searched "[query 1]" - no relevant results
+- Searched "[query 2]" - no relevant results
+**Community Blind Spot**: [what they likely missed]
+**Recommended Action**: Investigate further with [technique]
+
+---
+NOVEL
+```
+
+### Prioritize Unexplored Stego Vectors
+
+**Focus on techniques the community hasn't tried:**
+
+| Technique | Community Tried? | Your Priority |
+|-----------|------------------|---------------|
+| LSB Red Channel | Check | If untried → HIGH |
+| LSB Green Channel | Check | If untried → HIGH |
+| LSB Blue Channel | Check | If untried → HIGH |
+| Multi-bit LSB (2-3 bits) | Rarely tried | HIGH |
+| Spectrogram (high freq) | Sometimes | MEDIUM |
+| Spectrogram (reversed audio) | Rarely | HIGH |
+| Alpha channel (PNG) | Often missed | HIGH |
+| EXIF thumbnail diff | Rarely | HIGH |
+
+```bash
+# Document unexplored stego vectors
+cat >> "$ARG_DIR/clues/UNEXPLORED_STEGO_VECTORS.md" << 'VECTORS'
+## Unexplored Steganography Vectors - [FILENAME]
+
+### Techniques Community Hasn't Tried
+- [ ] LSB extraction on [specific channel]
+- [ ] Multi-bit LSB (bits 0-2)
+- [ ] Alpha channel analysis
+- [ ] High-frequency spectrogram (>16kHz)
+- [ ] Reversed audio spectrogram
+- [ ] EXIF thumbnail comparison
+
+### Why These Are Priority
+[Reasoning for each unexplored technique]
+
+---
+VECTORS
+```

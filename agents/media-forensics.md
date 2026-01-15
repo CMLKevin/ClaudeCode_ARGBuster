@@ -380,3 +380,119 @@ $ARG_DIR/extracted/
 4. **Modified thumbnails**: Thumbnail differs from main image
 5. **Hidden text layers**: In PDFs or office documents
 6. **Unusual file sizes**: Larger than expected for content
+
+## 🔍 Community Cross-Reference & Novel Discovery
+
+**After EACH forensic finding, cross-reference with community:**
+
+### Cross-Reference Protocol
+
+```bash
+# Search if this forensic finding is known
+WebSearch: "[filename] hidden data ARG"
+WebSearch: "[filename] embedded file discovered"
+WebSearch: "[ARG name] [file type] forensics analysis"
+WebSearch: "[ARG name] binwalk extraction"
+
+# Log cross-reference
+cat >> "$ARG_DIR/clues/FORENSICS_CROSS_REFERENCE.md" << 'XREF'
+## [TIMESTAMP] - Forensics Cross-Reference
+
+**File Analyzed**: [filename]
+**Analysis Type**: [binwalk/metadata/hex/structure]
+**Your Discovery**: [what you found]
+**Community Status**: [KNOWN/UNKNOWN/PARTIAL]
+**Search Queries**: [what you searched]
+**Novel?**: [YES if no community mentions]
+
+---
+XREF
+```
+
+### Identify Novel Forensic Findings
+
+```bash
+# Track novel forensic discoveries
+cat >> "$ARG_DIR/clues/NOVEL_FORENSICS_DISCOVERIES.md" << 'NOVEL'
+## 🆕 Novel Forensic Finding - [TIMESTAMP]
+
+**File**: [filename]
+**Discovery**: [embedded file/metadata/anomaly]
+**Technique**: [how you found it]
+**Why Novel**:
+- Searched "[query 1]" - no community mentions
+- Not documented in any ARG wiki/thread
+**Community Blind Spot**: [why they missed it]
+**Significance**: [what this reveals]
+
+---
+NOVEL
+```
+
+### Prioritize Unexplored Forensic Vectors
+
+**Focus on forensic techniques the community hasn't tried:**
+
+| Technique | Community Usually Tries | Often Missed (YOUR PRIORITY) |
+|-----------|-------------------------|------------------------------|
+| binwalk | Basic scan | Deep extraction with --dd |
+| exiftool | Standard fields | Verbose mode (-v3), maker notes |
+| strings | Default length | Short strings (-n 4), unicode |
+| Hex analysis | Header only | EOF region, padding areas |
+| Thumbnails | View only | Compare to main image |
+| PDF | Text extraction | JavaScript, embedded files, layers |
+| Office docs | Content only | Hidden sheets, comments, macros |
+
+```bash
+# Document unexplored forensic vectors
+cat >> "$ARG_DIR/clues/UNEXPLORED_FORENSICS_VECTORS.md" << 'VECTORS'
+## Unexplored Forensic Vectors - [FILENAME]
+
+### Techniques Community Hasn't Tried
+- [ ] Deep binwalk extraction (--dd flag)
+- [ ] Verbose metadata (exiftool -v3)
+- [ ] Hex analysis of EOF region
+- [ ] Thumbnail vs main image comparison
+- [ ] Short string extraction (-n 4)
+- [ ] Unicode string search
+- [ ] File slack space analysis
+- [ ] Timestamp anomaly check
+
+### Anomalies to Investigate
+1. [File size larger than expected]
+2. [Unusual metadata fields]
+3. [Non-standard file structure]
+
+### Your Novel Investigation Angles
+1. [Unique technique 1]
+2. [Unique technique 2]
+
+---
+VECTORS
+```
+
+### File Anomaly Priority System
+
+**When you find anomalies, check if community noticed:**
+
+```bash
+# Search for community discussion of specific anomalies
+WebSearch: "[filename] file size anomaly"
+WebSearch: "[filename] corrupted header"
+WebSearch: "[ARG name] polyglot file"
+
+# If NO community mention → CRITICAL PRIORITY
+cat >> "$ARG_DIR/clues/CRITICAL_ANOMALIES.md" << 'CRITICAL'
+## 🚨 CRITICAL: Undocumented Anomaly - [TIMESTAMP]
+
+**File**: [filename]
+**Anomaly**: [what's unusual]
+**Why Critical**: No community mentions found
+**Investigation Plan**:
+1. [Step 1]
+2. [Step 2]
+3. [Step 3]
+
+---
+CRITICAL
+```

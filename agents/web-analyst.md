@@ -574,3 +574,124 @@ Generate web analysis report at `~/Downloads/ARG_Investigation/reports/web-[doma
 8. **Unicode steganography**: Zero-width characters in text
 9. **Inspect element triggers**: Functions that detect DevTools
 10. **Time-based reveals**: Content that appears at specific times
+
+## 🔍 Community Cross-Reference & Novel Discovery
+
+**After EACH web finding, cross-reference with community:**
+
+### Cross-Reference Protocol
+
+```bash
+# Search if this web finding is known
+WebSearch: "[URL path] ARG secret discovered"
+WebSearch: "[hidden element content] [ARG name]"
+WebSearch: "[ARG name] HTML comment hidden"
+WebSearch: "[ARG name] console message easter egg"
+WebSearch: "[data-attribute value] ARG clue"
+
+# Log cross-reference
+cat >> "$ARG_DIR/clues/WEB_CROSS_REFERENCE.md" << 'XREF'
+## [TIMESTAMP] - Web Cross-Reference
+
+**URL**: [page URL]
+**Finding Type**: [comment/hidden element/data-attr/console/etc]
+**Your Discovery**: [what you found]
+**Community Status**: [KNOWN/UNKNOWN/PARTIAL]
+**Search Queries**: [what you searched]
+**Novel?**: [YES if no community mentions]
+
+---
+XREF
+```
+
+### Identify Novel Web Findings
+
+```bash
+# Track novel web discoveries
+cat >> "$ARG_DIR/clues/NOVEL_WEB_DISCOVERIES.md" << 'NOVEL'
+## 🆕 Novel Web Finding - [TIMESTAMP]
+
+**URL**: [where found]
+**Discovery Type**: [comment/hidden/console/storage/etc]
+**Content**: [what you found]
+**Why Novel**:
+- Searched "[query 1]" - no community mentions
+- Not in any ARG wiki documentation
+**Community Blind Spot**: [why they missed it]
+**Potential Significance**: [what this could mean]
+
+---
+NOVEL
+```
+
+### Prioritize Unexplored Web Vectors
+
+**Focus on web analysis the community hasn't done:**
+
+| Analysis Type | Community Usually Checks | Often Missed (YOUR PRIORITY) |
+|---------------|--------------------------|------------------------------|
+| HTML Comments | Obvious comments | Nested, multi-line, in JS |
+| Hidden Elements | display:none | Off-screen positioned, opacity:0 |
+| Data Attributes | Common data-* | Custom attributes, encoded values |
+| Console | Page load messages | Error handlers, timed messages |
+| localStorage | Keys | Historical values, removed entries |
+| CSS Content | ::before/::after | Media queries, animation states |
+| Network | Main requests | XHR, websockets, prefetch |
+
+```bash
+# Document unexplored web vectors
+cat >> "$ARG_DIR/clues/UNEXPLORED_WEB_VECTORS.md" << 'VECTORS'
+## Unexplored Web Vectors - [URL]
+
+### Techniques Community Hasn't Tried
+- [ ] Check comments inside <script> tags
+- [ ] Inspect ::before/::after content
+- [ ] Trigger all interactive elements (hover, click, key sequences)
+- [ ] Check different screen sizes (mobile vs desktop)
+- [ ] Inspect websocket connections
+- [ ] Review XHR/fetch requests
+- [ ] Check for service workers
+- [ ] Look for obfuscated JavaScript variables
+
+### Hidden Interaction Patterns to Test
+- [ ] Konami code (↑↑↓↓←→←→BA)
+- [ ] Click sequence on specific elements
+- [ ] Specific text input triggers
+- [ ] Time-based reveals (wait on page)
+- [ ] Scroll-triggered content
+
+### Your Novel Investigation Angles
+1. [Unique approach 1]
+2. [Unique approach 2]
+
+---
+VECTORS
+```
+
+### JavaScript Deep Dive Priority
+
+**If community hasn't fully analyzed JS:**
+
+```bash
+# Search for community JS analysis
+WebSearch: "[ARG name] javascript deobfuscated"
+WebSearch: "[ARG name] source code analysis"
+WebSearch: "[ARG name] hidden functions"
+
+# If sparse → HIGH PRIORITY
+cat >> "$ARG_DIR/clues/JS_INVESTIGATION.md" << 'JS'
+## 🎯 Priority: JavaScript Analysis - [URL]
+
+**Community Coverage**: [sparse/partial/thorough]
+**Your Focus Areas**:
+1. [Obfuscated function 1]
+2. [Interesting variable 1]
+3. [Event handler 1]
+
+**Deobfuscation Attempts**:
+- [What you tried]
+- [Results]
+
+---
+JS
+```

@@ -325,29 +325,122 @@ Generated: [timestamp]
 5. **Certificate SANs**: May reveal additional related domains
 6. **Registrant info**: Can link to fictional characters or themes
 
-## ARG Community Research
+## 🔍 Community Cross-Reference & Novel Discovery
 
-**IMPORTANT**: Always search for existing community analysis:
+**After EACH OSINT finding, cross-reference with community:**
+
+### Cross-Reference Protocol
 
 ```bash
-# WebSearch queries for community findings:
-WebSearch: "[domain] ARG reddit"
-WebSearch: "[domain] gamedetectives wiki"
-WebSearch: "[domain] puzzle solution"
-WebSearch: "[domain] unfiction ARG"
+# Search if this OSINT finding is known
+WebSearch: "[domain] WHOIS ARG investigation"
+WebSearch: "[subdomain] discovered ARG"
+WebSearch: "[registrant info] ARG connection"
+WebSearch: "[ARG name] DNS TXT record secrets"
+
+# Log cross-reference
+cat >> "$ARG_DIR/clues/OSINT_CROSS_REFERENCE.md" << 'XREF'
+## [TIMESTAMP] - OSINT Cross-Reference
+
+**Target**: [domain/IP/entity]
+**Finding Type**: [WHOIS/DNS/subdomain/cert/etc]
+**Your Discovery**: [what you found]
+**Community Status**: [KNOWN/UNKNOWN/PARTIAL]
+**Search Queries**: [what you searched]
+**Novel?**: [YES if no community mentions]
+
+---
+XREF
 ```
 
-Key ARG community resources:
+### Identify Novel OSINT Findings
+
+```bash
+# Track novel OSINT discoveries
+cat >> "$ARG_DIR/clues/NOVEL_OSINT_DISCOVERIES.md" << 'NOVEL'
+## 🆕 Novel OSINT Finding - [TIMESTAMP]
+
+**Target**: [domain/entity]
+**Discovery**: [what you found]
+**Source**: [WHOIS/DNS/crt.sh/Wayback/etc]
+**Why Novel**:
+- Searched "[query 1]" - no community mentions
+- Searched "[query 2]" - not in wiki documentation
+**Community Blind Spot**: [why they missed it]
+**Investigation Value**: [how this helps the ARG]
+
+---
+NOVEL
+```
+
+### Prioritize Unexplored OSINT Vectors
+
+**Focus on OSINT angles the community hasn't tried:**
+
+| OSINT Type | Community Usually Checks | Often Missed (YOUR PRIORITY) |
+|------------|--------------------------|------------------------------|
+| WHOIS | Basic registration | Historical WHOIS changes |
+| DNS | A, MX records | TXT records, SPF, DMARC |
+| Subdomains | Common prefixes | Certificate transparency (crt.sh) |
+| Wayback | Homepage snapshots | Deep page history, deleted content |
+| SSL Certs | Validity dates | SAN entries, issuer patterns |
+| Registrant | Name/email | Connected domains, patterns |
+
+```bash
+# Document unexplored OSINT vectors
+cat >> "$ARG_DIR/clues/UNEXPLORED_OSINT_VECTORS.md" << 'VECTORS'
+## Unexplored OSINT Vectors - [DOMAIN]
+
+### OSINT Angles Community Hasn't Tried
+- [ ] Historical WHOIS (check for registrant changes)
+- [ ] TXT record inspection (often contain ARG clues)
+- [ ] Certificate SAN enumeration (find related domains)
+- [ ] Wayback deep dive (deleted pages, old versions)
+- [ ] Reverse WHOIS (other domains by same registrant)
+- [ ] ASN/IP range neighbors (related infrastructure)
+
+### Community Assumptions to Challenge
+1. [Assumption 1] - What if this is wrong?
+2. [Assumption 2] - Alternative interpretation
+
+### Your Novel Investigation Angles
+1. [Unique approach 1]
+2. [Unique approach 2]
+
+---
+VECTORS
+```
+
+### ARG Community Research
+
+**AFTER your own investigation, check community knowledge:**
+
+```bash
+# Search for community analysis
+WebSearch: "[domain] ARG reddit gamedetectives"
+WebSearch: "[domain] ARG wiki investigation"
+WebSearch: "[domain] puzzle solution unfiction"
+WebSearch: "[domain] what we know ARG"
+
+# Specifically search for gaps
+WebSearch: "[domain] ARG unsolved"
+WebSearch: "[domain] ARG stuck help"
+WebSearch: "[domain] ARG theories"
+```
+
+**Key ARG community resources:**
 - **Reddit**: r/ARG, r/gamedetectives, r/codes, r/cicada
 - **Game Detectives Wiki**: wiki.gamedetectives.net
 - **ARGNet**: argn.com
 - **Unfiction**: forums.unfiction.com
 
-When researching a domain:
-1. First check if it's a known ARG
-2. Look for existing writeups and solutions
-3. Find the puzzle chain documentation
-4. Identify what the community is stuck on
+### Cross-Reference Workflow
+
+1. **First**: Complete YOUR OSINT investigation
+2. **Then**: Search community for same findings
+3. **Compare**: What did you find that they didn't?
+4. **Prioritize**: Focus on YOUR novel findings
+5. **Document**: Log everything to NOVEL_OSINT_DISCOVERIES.md
 
 ## Privacy Considerations
 

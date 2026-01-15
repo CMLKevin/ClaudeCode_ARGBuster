@@ -401,19 +401,180 @@ Look for connections:
 - Are there patterns in the naming?
 - Do numbers/dates point to other content?
 
-### Phase 6: Community Reference (ONLY AFTER EXHAUSTING DIRECT INVESTIGATION)
+### Phase 6: Community Cross-Reference & Novel Discovery
 
-**Only after you've discovered everything you can:**
-```
-WebSearch: "[target] ARG secrets"
-WebSearch: "[target] hidden pages"
-WebSearch: "[target] puzzle solution"
+**After exhausting direct investigation, ACTIVELY cross-reference with community knowledge:**
+
+#### 6A. Community Resource Search
+```bash
+# Search multiple ARG community resources
+WebSearch: "[target] ARG reddit gamedetectives"
+WebSearch: "[target] ARG wiki solution"
+WebSearch: "[target] ARG unfiction forum"
+WebSearch: "[target] hidden secret discovered"
+WebSearch: "[target] puzzle decoded solution"
 ```
 
-Compare your findings with community discoveries:
-- Did you find everything they found?
-- Did you find things they MISSED?
-- Are there unsolved elements you can now crack?
+**Key Community Resources:**
+- **Reddit**: r/ARG, r/gamedetectives, r/codes, r/puzzles
+- **Game Detectives Wiki**: wiki.gamedetectives.net
+- **ARGNet**: argn.com
+- **Unfiction Forums**: forums.unfiction.com
+- **Discord servers**: Search for ARG-specific discords
+
+#### 6B. Cross-Reference Every Finding
+
+**For EACH discovery you make, check if community knows about it:**
+
+```bash
+# After finding something, search for it
+WebSearch: "[exact finding] [ARG name]"
+WebSearch: "[decoded message] site:reddit.com"
+WebSearch: "[hidden URL path] ARG"
+
+# Log cross-reference result
+cat >> "$ARG_DIR/clues/CROSS_REFERENCE_LOG.md" << 'XREF'
+## [TIMESTAMP] - Cross-Reference Check
+
+**Your Finding**: [what you discovered]
+**Community Status**: [KNOWN/UNKNOWN/PARTIAL]
+**Community Sources**: [links if found]
+**Your Unique Additions**: [what you found that they didn't mention]
+**Priority**: [HIGH if unknown, LOW if well-documented]
+
+---
+XREF
+```
+
+#### 6C. Identify NOVEL Discoveries
+
+**Track what the community HASN'T found:**
+
+```bash
+# Create novel discoveries tracker
+cat >> "$ARG_DIR/clues/NOVEL_DISCOVERIES.md" << 'NOVEL'
+# 🆕 Novel Discoveries (Not Found in Community)
+
+## [TIMESTAMP] - NOVEL FINDING
+
+**Discovery**: [what you found]
+**Why Novel**: [searched X resources, no mention found]
+**Search Queries Used**:
+- "[query 1]" - 0 results
+- "[query 2]" - 0 results
+**Verification**: [how you confirmed it's undocumented]
+**Potential Significance**: [why this matters]
+**Next Steps**: [deeper investigation needed]
+
+---
+NOVEL
+```
+
+#### 6D. Priority Investigation Matrix
+
+**Focus investigation resources on UNEXPLORED vectors:**
+
+| Finding Status | Community Knowledge | Your Action |
+|----------------|---------------------|-------------|
+| 🔴 **UNEXPLORED** | No community mentions | **PRIORITY: Deep dive immediately** |
+| 🟡 **PARTIAL** | Community found but didn't solve | **HIGH: You may crack it** |
+| 🟢 **DOCUMENTED** | Well-documented solution | **LOW: Use as reference only** |
+| ⚪ **CONSENSUS GAP** | Community disagrees | **MEDIUM: Fresh perspective needed** |
+
+```bash
+# Track investigation priorities
+cat >> "$ARG_DIR/clues/INVESTIGATION_PRIORITIES.md" << 'PRIORITY'
+# Investigation Priority Queue
+
+## 🔴 UNEXPLORED (No Community Knowledge)
+- [ ] [Finding 1] - [why unexplored]
+- [ ] [Finding 2] - [why unexplored]
+
+## 🟡 PARTIAL (Community Stuck)
+- [ ] [Finding 1] - [what community tried]
+- [ ] [Finding 2] - [where they got stuck]
+
+## ⚪ CONSENSUS GAP (Community Disagrees)
+- [ ] [Topic 1] - [Theory A vs Theory B]
+
+## 🟢 DOCUMENTED (Reference Only)
+- [x] [Finding 1] - [community solution link]
+
+---
+PRIORITY
+```
+
+#### 6E. Unexplored Vector Hunting
+
+**Actively seek investigation angles the community missed:**
+
+```bash
+# Check what the community HASN'T tried
+WebSearch: "[ARG name] unsolved mysteries"
+WebSearch: "[ARG name] stuck help"
+WebSearch: "[ARG name] theories unconfirmed"
+WebSearch: "[ARG name] what we still don't know"
+
+# Document unexplored vectors
+cat >> "$ARG_DIR/clues/UNEXPLORED_VECTORS.md" << 'VECTORS'
+# 🎯 Unexplored Investigation Vectors
+
+## Community Blind Spots Identified
+1. [Vector 1] - Community hasn't tried [technique] on [element]
+2. [Vector 2] - No one has checked [location/file] for [pattern]
+
+## Alternative Approaches
+1. [Approach 1] - Standard approach: X, Your approach: Y
+2. [Approach 2] - Different tool/technique suggestion
+
+## Unasked Questions
+1. What if [assumption] is wrong?
+2. Has anyone checked [specific thing]?
+
+---
+VECTORS
+```
+
+#### 6F. Report Novel Findings
+
+**At investigation end, summarize what's NEW:**
+
+```bash
+# Generate novel findings summary
+cat > "$ARG_DIR/reports/NOVEL_FINDINGS_SUMMARY.md" << 'SUMMARY'
+# 🏆 Novel Findings Report - [ARG NAME]
+
+## Executive Summary
+- **Total Findings**: [X]
+- **Community-Known**: [Y]
+- **NOVEL (Your Discoveries)**: [Z]
+- **Unexplored Vectors Identified**: [W]
+
+## Your Original Discoveries
+
+### 1. [Novel Finding 1]
+**What**: [description]
+**Where**: [location]
+**Significance**: [why it matters]
+**Community Status**: NOT DOCUMENTED
+**Verification**: Searched [X resources], no matches
+
+### 2. [Novel Finding 2]
+...
+
+## Unexplored Vectors for Future Investigation
+1. [Vector with reasoning]
+2. [Vector with reasoning]
+
+## Community Gaps You Can Fill
+1. [What community is missing]
+2. [Fresh perspective you can offer]
+
+---
+Generated: [TIMESTAMP]
+Investigation: $ARG_DIR
+SUMMARY
+```
 
 ---
 
