@@ -54,30 +54,67 @@ Your job is to:
 
 ## 📁 FIRST: Create ARG-Specific Investigation Folder
 
-**BEFORE doing anything else, extract the ARG name and create a dedicated folder:**
+**YOU (the orchestrator) are responsible for creating the investigation folder. Do this BEFORE anything else.**
+
+### Step 1: Extract ARG Name
+
+**Extract a clean ARG name from the user's input:**
 
 ```bash
-# Extract ARG name from URL or use provided name
-# Examples:
-#   https://deltarune.com → deltarune
-#   https://mysterious-game.com/puzzle → mysterious-game
-#   ~/Downloads/cicada3301.png → cicada3301
+# FROM URL: Extract domain name (remove TLD)
+# https://deltarune.com/dess/ → "deltarune"
+# https://mysterious-game.com/puzzle → "mysterious-game"
+# https://arg.example.org → "arg_example"
+ARG_NAME=$(echo "https://deltarune.com" | sed -E 's|https?://||; s|/.*||; s|\.[^.]+$||; s|\.|-|g')
 
-# Set ARG_NAME variable (extract domain or filename without extension)
-ARG_NAME="[extracted_name]"  # e.g., "deltarune", "cicada3301", "mysterious-game"
+# FROM FILE: Extract filename without extension
+# ~/Downloads/cicada3301.png → "cicada3301"
+# secret_puzzle.mp3 → "secret_puzzle"
+ARG_NAME=$(basename "filename.png" | sed 's|\.[^.]*$||')
 
-# Create ARG-specific investigation folder
-ARG_DIR=~/Downloads/${ARG_NAME}_ARG_Investigation
+# FROM USER-PROVIDED NAME: Use directly
+# "Cicada 3301" → "cicada_3301"
+ARG_NAME=$(echo "Cicada 3301" | tr ' ' '_' | tr '[:upper:]' '[:lower:]')
+```
+
+### Step 2: Create Investigation Folder
+
+```bash
+# Create the ARG-specific investigation folder
+export ARG_NAME="deltarune"  # Replace with extracted name
+export ARG_DIR=~/Downloads/${ARG_NAME}_ARG_Investigation
+
+# Create folder structure
 mkdir -p "$ARG_DIR"/{extracted,spectrograms,reports,logs,clues}
 
-# All subsequent paths use $ARG_DIR
-echo "Investigation folder: $ARG_DIR"
+# Confirm creation
+echo "✅ Investigation folder created: $ARG_DIR"
+ls -la "$ARG_DIR"
+```
+
+### Step 3: Pass to Subagents
+
+**When spawning subagents, ALWAYS include ARG_NAME and ARG_DIR in the prompt:**
+
+```
+Task prompt to subagent:
+"Analyze [target].
+
+IMPORTANT: Use these investigation paths:
+- ARG_NAME: deltarune
+- ARG_DIR: ~/Downloads/deltarune_ARG_Investigation
+
+Save all outputs to $ARG_DIR/[appropriate_subfolder]/"
 ```
 
 **Folder naming examples:**
-- `deltarune.com` → `~/Downloads/deltarune_ARG_Investigation/`
-- `cicada3301.org` → `~/Downloads/cicada3301_ARG_Investigation/`
-- `ilovebees.com` → `~/Downloads/ilovebees_ARG_Investigation/`
+| User Input | ARG_NAME | ARG_DIR |
+|------------|----------|---------|
+| `https://deltarune.com` | `deltarune` | `~/Downloads/deltarune_ARG_Investigation/` |
+| `https://cicada3301.org` | `cicada3301` | `~/Downloads/cicada3301_ARG_Investigation/` |
+| `https://ilovebees.com` | `ilovebees` | `~/Downloads/ilovebees_ARG_Investigation/` |
+| `mysterious_game.png` | `mysterious_game` | `~/Downloads/mysterious_game_ARG_Investigation/` |
+| `"Year Zero ARG"` | `year_zero_arg` | `~/Downloads/year_zero_arg_ARG_Investigation/` |
 
 ## 🚫 CRITICAL: NEVER USE WEBFETCH - ONLY CURL/WGET
 
