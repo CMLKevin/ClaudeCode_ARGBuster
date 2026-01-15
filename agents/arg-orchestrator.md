@@ -52,6 +52,33 @@ Your job is to:
 4. **Multi-Domain Analysis**: Coordinate specialists for deep analysis
 5. **Original Discovery**: Find secrets through investigation, not search
 
+## 📁 FIRST: Create ARG-Specific Investigation Folder
+
+**BEFORE doing anything else, extract the ARG name and create a dedicated folder:**
+
+```bash
+# Extract ARG name from URL or use provided name
+# Examples:
+#   https://deltarune.com → deltarune
+#   https://mysterious-game.com/puzzle → mysterious-game
+#   ~/Downloads/cicada3301.png → cicada3301
+
+# Set ARG_NAME variable (extract domain or filename without extension)
+ARG_NAME="[extracted_name]"  # e.g., "deltarune", "cicada3301", "mysterious-game"
+
+# Create ARG-specific investigation folder
+ARG_DIR=~/Downloads/${ARG_NAME}_ARG_Investigation
+mkdir -p "$ARG_DIR"/{extracted,spectrograms,reports,logs,clues}
+
+# All subsequent paths use $ARG_DIR
+echo "Investigation folder: $ARG_DIR"
+```
+
+**Folder naming examples:**
+- `deltarune.com` → `~/Downloads/deltarune_ARG_Investigation/`
+- `cicada3301.org` → `~/Downloads/cicada3301_ARG_Investigation/`
+- `ilovebees.com` → `~/Downloads/ilovebees_ARG_Investigation/`
+
 ## 🚫 CRITICAL: NEVER USE WEBFETCH - ONLY CURL/WGET
 
 **⛔ DO NOT USE the WebFetch tool. EVER. It has domain restrictions that will block your investigation.**
@@ -60,7 +87,7 @@ Your job is to:
 
 ```bash
 # Fetch a page and save to extracted/
-curl -sL "https://target.com/page" -o ~/Downloads/ARG_Investigation/extracted/page.html
+curl -sL "https://target.com/page" -o "$ARG_DIR/extracted/page.html"
 
 # Fetch with custom headers
 curl -sL -H "User-Agent: Mozilla/5.0" "https://target.com/page"
@@ -69,10 +96,10 @@ curl -sL -H "User-Agent: Mozilla/5.0" "https://target.com/page"
 curl -s -o /dev/null -w "%{http_code}" "https://target.com/secret"
 
 # Download media files
-wget -q -O ~/Downloads/ARG_Investigation/extracted/file.png "https://target.com/file.png"
+wget -q -O "$ARG_DIR/extracted/file.png" "https://target.com/file.png"
 
 # Recursive download all media
-wget -r -l 1 -nd -A jpg,png,gif,mp3,ogg,wav -P ~/Downloads/ARG_Investigation/extracted/ "https://target.com"
+wget -r -l 1 -nd -A jpg,png,gif,mp3,ogg,wav -P "$ARG_DIR/extracted/" "https://target.com"
 ```
 
 **Why curl/wget ONLY:**
@@ -83,18 +110,16 @@ wget -r -l 1 -nd -A jpg,png,gif,mp3,ogg,wav -P ~/Downloads/ARG_Investigation/ext
 
 ## 📂 MANDATORY: Active Extraction Protocol
 
-**EVERY discovery MUST be extracted to the correct folder:**
+**EVERY discovery MUST be extracted to the ARG-specific folder:**
 
 ```bash
-# Initialize investigation structure
-mkdir -p ~/Downloads/ARG_Investigation/{extracted,spectrograms,reports,logs,clues}
-
-# Folder purposes:
-# extracted/   → Downloaded files (images, audio, HTML, documents)
-# spectrograms/ → Audio spectrograms and visual analysis
-# reports/     → Investigation reports and findings summaries
-# logs/        → Raw data dumps, metadata, debug output
-# clues/       → KEY CLUES extracted and organized
+# Folder structure (created above):
+# $ARG_DIR/
+# ├── extracted/    → Downloaded files (images, audio, HTML, documents)
+# ├── spectrograms/ → Audio spectrograms and visual analysis
+# ├── reports/      → Investigation reports and findings summaries
+# ├── logs/         → Raw data dumps, metadata, debug output
+# └── clues/        → KEY CLUES extracted and organized
 ```
 
 ### Automatic Clue Extraction
@@ -103,19 +128,19 @@ mkdir -p ~/Downloads/ARG_Investigation/{extracted,spectrograms,reports,logs,clue
 
 ```bash
 # Save discovered URLs
-echo "https://target.com/secret-page" >> ~/Downloads/ARG_Investigation/clues/discovered_urls.txt
+echo "https://target.com/secret-page" >> "$ARG_DIR/clues/discovered_urls.txt"
 
 # Save decoded text
-echo "Decoded message: THE ANSWER IS 42" >> ~/Downloads/ARG_Investigation/clues/decoded_messages.txt
+echo "Decoded message: THE ANSWER IS 42" >> "$ARG_DIR/clues/decoded_messages.txt"
 
 # Save hidden content
-echo "Hidden element found: <div hidden>secret</div>" >> ~/Downloads/ARG_Investigation/clues/hidden_content.txt
+echo "Hidden element found: <div hidden>secret</div>" >> "$ARG_DIR/clues/hidden_content.txt"
 
 # Save metadata clues
-echo "EXIF Comment: 'Look deeper'" >> ~/Downloads/ARG_Investigation/clues/metadata_clues.txt
+echo "EXIF Comment: 'Look deeper'" >> "$ARG_DIR/clues/metadata_clues.txt"
 
 # Save encoded strings for later
-echo "Suspicious Base64: SGVsbG8gV29ybGQ=" >> ~/Downloads/ARG_Investigation/clues/encoded_strings.txt
+echo "Suspicious Base64: SGVsbG8gV29ybGQ=" >> "$ARG_DIR/clues/encoded_strings.txt"
 ```
 
 ### Master Clue Index
@@ -124,7 +149,7 @@ echo "Suspicious Base64: SGVsbG8gV29ybGQ=" >> ~/Downloads/ARG_Investigation/clue
 
 ```bash
 # Append to master clue index
-cat >> ~/Downloads/ARG_Investigation/clues/MASTER_INDEX.md << 'CLUE'
+cat >> "$ARG_DIR/clues/MASTER_INDEX.md" << 'CLUE'
 ## [TIMESTAMP] - [CLUE_TYPE]
 - **Source**: [where found]
 - **Content**: [the clue itself]
