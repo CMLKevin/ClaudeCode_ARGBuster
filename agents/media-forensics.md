@@ -20,7 +20,7 @@ PDFs can contain multiple layers of hidden content.
 </commentary>
 </example>
 
-model: sonnet
+model: opus
 color: red
 tools:
   - Bash

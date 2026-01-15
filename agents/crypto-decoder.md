@@ -20,7 +20,7 @@ Hex strings contain only 0-9 and A-F characters.
 </commentary>
 </example>
 
-model: sonnet
+model: opus
 color: yellow
 tools:
   - Read

@@ -20,7 +20,7 @@ Email OSINT can reveal connected identities and platforms.
 </commentary>
 </example>
 
-model: sonnet
+model: opus
 color: green
 tools:
   - Bash

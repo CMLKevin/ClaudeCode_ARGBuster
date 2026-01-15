@@ -20,7 +20,7 @@ Dynamic content requires browser automation for proper analysis.
 </commentary>
 </example>
 
-model: sonnet
+model: opus
 color: blue
 tools:
   - Read

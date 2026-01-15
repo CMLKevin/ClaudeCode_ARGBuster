@@ -20,7 +20,7 @@ Audio spectrograms often reveal hidden images or text in ARGs.
 </commentary>
 </example>
 
-model: sonnet
+model: opus
 color: cyan
 tools:
   - Read
