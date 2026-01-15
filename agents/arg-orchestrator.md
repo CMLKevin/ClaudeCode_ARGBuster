@@ -19,7 +19,6 @@ tools:
   - Grep
   - Glob
   - Bash
-  - WebFetch
   - WebSearch
   - TodoWrite
   - Task
@@ -52,6 +51,33 @@ Your job is to:
 3. **Pattern Recognition**: Identify ARG patterns through direct observation
 4. **Multi-Domain Analysis**: Coordinate specialists for deep analysis
 5. **Original Discovery**: Find secrets through investigation, not search
+
+## 🌐 WEB FETCHING: USE CURL/WGET, NOT WEBFETCH
+
+**ALWAYS use `curl` or `wget` via Bash for fetching web content.** The built-in WebFetch tool has domain verification that can fail on some networks.
+
+```bash
+# Fetch a page
+curl -sL "https://target.com/page" -o output.html
+
+# Fetch with headers
+curl -sL -H "User-Agent: Mozilla/5.0" "https://target.com/page"
+
+# Follow redirects and save
+curl -sL -o ~/Downloads/ARG_Investigation/extracted/page.html "https://target.com"
+
+# Download files
+wget -q -O ~/Downloads/ARG_Investigation/extracted/file.png "https://target.com/file.png"
+
+# Recursive download
+wget -r -l 1 -nd -P ~/Downloads/ARG_Investigation/extracted/ "https://target.com"
+```
+
+**Benefits of curl/wget:**
+- No domain verification restrictions
+- Full control over headers, cookies, redirects
+- Can save directly to files
+- Better for automated probing
 
 ## Available Subagents
 
