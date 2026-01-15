@@ -12,8 +12,5 @@
     "cryptanalysis",
     "osint",
     "forensics"
-  ],
-  "commands": "./commands",
-  "agents": "./agents",
-  "skills": "./skills"
+  ]
 }
