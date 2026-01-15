@@ -10,17 +10,40 @@ This toolkit prioritizes **direct investigation over community search**. The age
 
 ## Installation
 
+### Option 1: Load with --plugin-dir (Recommended)
+
+```bash
+# Clone the repo
+git clone https://github.com/CMLKevin/ClaudeCode_ARGBuster.git
+
+# Start Claude Code with the plugin loaded
+claude --plugin-dir ./ClaudeCode_ARGBuster
+```
+
+### Option 2: Add to local plugins directory
+
 ```bash
 # Copy to Claude Code plugins directory
-cp -r ClaudeCode_ARGBuster ~/.claude/plugins/local/
+cp -r ClaudeCode_ARGBuster ~/.claude/plugins/local/arg-investigation
 
-# Restart Claude Code - plugins auto-discover
-claude
+# Start Claude Code with the plugin
+claude --plugin-dir ~/.claude/plugins/local/arg-investigation
 ```
+
+### Option 3: Create a shell alias (Permanent)
+
+Add to your `~/.zshrc` or `~/.bashrc`:
+
+```bash
+alias claude-arg='claude --plugin-dir ~/.claude/plugins/local/arg-investigation'
+```
+
+Then use `claude-arg` to start Claude Code with ARG capabilities.
 
 ## Quick Start
 
 ```bash
+# After starting Claude with the plugin loaded:
 /arg https://mysterious-arg-site.com    # Full investigation
 /decode SGVsbG8gV29ybGQ=                 # Quick decode
 /stego:spectrogram ~/audio.mp3          # Audio spectrogram
