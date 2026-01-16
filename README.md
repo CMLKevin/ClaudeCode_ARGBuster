@@ -1,12 +1,63 @@
 # ClaudeCode ARGBuster
 
-Advanced ARG (Alternate Reality Game) investigation toolkit for Claude Code. Features 6 specialized **opus-powered** agents that **investigate directly** - cracking puzzles through original analysis, not by searching for existing solutions.
+Advanced ARG (Alternate Reality Game) investigation toolkit for Claude Code. Features 6 specialized **opus-powered** agents that work **autonomously** in a flat architecture - each agent investigates directly, cracks puzzles through original analysis, and recommends next steps for Claude Code to orchestrate.
 
 ## Philosophy
 
 > **"BE RELENTLESS. BE THOROUGH. CRACK THE ARG."**
 
 This toolkit prioritizes **direct investigation over community search**. The agents probe, analyze, decode, and follow puzzle chains themselves - only referencing community findings after exhausting original investigation.
+
+## Architecture
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                    FLAT AGENT ARCHITECTURE                       │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                  │
+│  User Request                                                    │
+│       │                                                          │
+│       ▼                                                          │
+│  ┌─────────┐                                                     │
+│  │ Claude  │  Decides which specialist to spawn based on input   │
+│  │  Code   │                                                     │
+│  └────┬────┘                                                     │
+│       │                                                          │
+│       ▼ Spawns ONE agent at a time                               │
+│  ┌─────────────────────────────────────────────────────────┐     │
+│  │  SELF-SUFFICIENT AGENTS (work independently)            │     │
+│  │                                                         │     │
+│  │  ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐   │     │
+│  │  │  stego   │ │  crypto  │ │  osint   │ │  media   │   │     │
+│  │  │ analyst  │ │ decoder  │ │  recon   │ │ forensic │   │     │
+│  │  └──────────┘ └──────────┘ └──────────┘ └──────────┘   │     │
+│  │  ┌──────────┐ ┌──────────┐                             │     │
+│  │  │   web    │ │   arg    │ ← Guide + Direct Investigator│     │
+│  │  │ analyst  │ │orchestr. │                             │     │
+│  │  └──────────┘ └──────────┘                             │     │
+│  └─────────────────────────────────────────────────────────┘     │
+│       │                                                          │
+│       ▼ Returns structured findings                              │
+│  ┌─────────┐                                                     │
+│  │ Claude  │  Reads report, decides next agent to spawn          │
+│  │  Code   │                                                     │
+│  └────┬────┘                                                     │
+│       │                                                          │
+│       ▼ Spawns next recommended agent...                         │
+│                                                                  │
+│  📁 ~/Downloads/${ARG_NAME}_ARG_Investigation/                   │
+│       └── All findings saved to ARG-specific folder              │
+│                                                                  │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+**Key Architecture Features:**
+- **No hierarchical orchestration** - Claude Code spawns agents directly
+- **Self-sufficient agents** - Each creates its own investigation folder if needed
+- **Structured output** - Agents return findings with `🚀 RECOMMENDED NEXT AGENTS`
+- **ARG-specific folders** - Each investigation gets its own folder named after the ARG
+
+---
 
 ## Installation
 
@@ -40,6 +91,8 @@ alias claude-arg='claude --plugin-dir ~/.claude/plugins/local/arg-investigation'
 
 Then use `claude-arg` to start Claude Code with ARG capabilities.
 
+---
+
 ## Quick Start
 
 ```bash
@@ -51,22 +104,39 @@ Then use `claude-arg` to start Claude Code with ARG capabilities.
 
 ---
 
+## Agent Selection Guide
+
+Claude Code spawns the appropriate agent based on what you have:
+
+| You Have | Agent to Use | Why |
+|----------|--------------|-----|
+| Website URL | **web-analyst** | Analyze HTML, JS, hidden elements, browser automation |
+| Image file | **stego-analyst** | LSB extraction, spectrograms, color channels |
+| Audio file | **stego-analyst** | Spectrogram analysis, phase analysis, reversed audio |
+| Encoded text | **crypto-decoder** | 50+ cipher types, multi-layer decoding |
+| Domain/IP | **osint-recon** | WHOIS, DNS, certs, Wayback Machine |
+| Unknown file | **media-forensics** | binwalk, magic bytes, embedded files |
+| Need guidance | **arg-orchestrator** | Investigation methodology, patterns |
+
+---
+
 ## Agents (6 Total) - All Opus-Powered
 
 ### 1. ARG Orchestrator (`agents/arg-orchestrator.md`)
 | Model | Color | Role |
 |-------|-------|------|
-| **opus** | magenta | Master coordinator - directs investigations, deploys specialists |
+| **opus** | magenta | **Guide & Direct Investigator** (not a coordinator) |
 
-**Capabilities:**
-- **Direct site investigation** using browser automation
-- Automated path probing (50+ common ARG paths)
-- Deploys subagents in parallel
-- Recursive chain following
-- Real-time documentation
+**What It Does:**
+- Provides **investigation methodology** and checklists
+- **Direct browser automation** for site investigation
+- **Agent selection guidance** for Claude Code
+- Reference for common ARG patterns and hiding techniques
 
-**6-Phase Investigation Protocol:**
-1. **Direct Reconnaissance** → 2. Aggressive Content Analysis → 3. Decode Everything → 4. Recursive Investigation → 5. Cross-Link Analysis → 6. Community Reference (LAST)
+**When to Use:**
+- When you need guidance on HOW to investigate
+- When you want direct browser-based investigation
+- When unsure which specialist to use
 
 ---
 
@@ -80,20 +150,35 @@ Then use `claude-arg` to start Claude Code with ARG capabilities.
 - **Audio**: Spectrogram generation (multiple ranges), phase analysis, reversed audio
 - **Tools**: exiftool, binwalk, sox, convert, zbarimg, tesseract
 
+**Recommends Next:** crypto-decoder (encoded data), media-forensics (embedded files)
+
 ---
 
 ### 3. Crypto Decoder (`agents/crypto-decoder.md`)
 | Model | Color | Role |
 |-------|-------|------|
-| **opus** | yellow | Cryptanalysis & multi-layer decoding |
+| **opus** | yellow | **Advanced cryptanalysis & 50+ cipher types** |
 
-**Supported Encodings:**
-| Category | Types |
-|----------|-------|
-| Modern | Base64, Hex, Binary, URL, HTML entities |
-| Classical | Caesar/ROT (all 26), Vigenère, Atbash, Substitution |
-| Numeric | A1Z26, ASCII, Phone keypad (T9) |
-| Symbolic | Morse, Braille, Semaphore, Pigpen |
+**5-Tier Encoding Detection Matrix:**
+
+| Tier | Category | Cipher Types |
+|------|----------|--------------|
+| 1 | Basic | Base64, Hex, Binary, URL, HTML entities |
+| 2 | Classic | Caesar/ROT1-25, Atbash, ROT47, Vigenère |
+| 3 | Numeric/Symbolic | A1Z26, ASCII, Morse, T9 Phone, Tap Code |
+| 4 | ARG-Specific | **W.D. Gaster (Wingdings)**, Standard Galactic, Braille, Runes, Pigpen, Bacon's Cipher |
+| 5 | Esoteric | Polybius, Playfair, Rail Fence, Bifid, Book Cipher |
+
+**Advanced Cryptanalysis:**
+- **Index of Coincidence** (IC) analysis for cipher identification
+- **Kasiski Examination** for Vigenère key length detection
+- **Automated Vigenère cracker** with chi-squared frequency analysis
+- **Rail Fence brute-forcer** (2-10 rails)
+- **Substitution cipher frequency analysis**
+- **Multi-layer decode chain** tracking
+- **ARG keyword dictionary attack**
+
+**Recommends Next:** web-analyst (decoded URLs), stego-analyst (decoded reveals image clues)
 
 ---
 
@@ -102,7 +187,17 @@ Then use `claude-arg` to start Claude Code with ARG capabilities.
 |-------|-------|------|
 | **opus** | green | Open source intelligence gathering |
 
-**Research:** WHOIS, DNS records, SSL certs (crt.sh), subdomains, Wayback Machine, identity search
+**Research Capabilities:**
+- WHOIS (including historical changes)
+- DNS records (A, MX, TXT, NS, CNAME, SPF, DMARC)
+- SSL certificates via crt.sh (find subdomains)
+- Wayback Machine deep dive
+- Username/email cross-platform search
+- Reverse WHOIS (other domains by same registrant)
+
+**Community Cross-Reference:** Checks GameDetectives, Reddit ARG communities, ARGNet after own investigation
+
+**Recommends Next:** web-analyst (discovered subdomains), crypto-decoder (encoded TXT records)
 
 ---
 
@@ -111,7 +206,16 @@ Then use `claude-arg` to start Claude Code with ARG capabilities.
 |-------|-------|------|
 | **opus** | red | Deep file forensic analysis |
 
-**Capabilities:** Magic bytes validation, embedded file extraction (binwalk/foremost), metadata analysis, QR/OCR detection, hash verification
+**Capabilities:**
+- Magic bytes validation (detect disguised files)
+- Embedded file extraction (binwalk, foremost)
+- Comprehensive metadata analysis (exiftool)
+- QR code detection (zbarimg)
+- OCR text extraction (tesseract)
+- Hash verification
+- Polyglot file detection
+
+**Recommends Next:** crypto-decoder (extracted text), stego-analyst (extracted images)
 
 ---
 
@@ -121,13 +225,21 @@ Then use `claude-arg` to start Claude Code with ARG capabilities.
 | **opus** | blue | Web analysis + browser automation |
 
 **Mandatory Investigation Protocol:**
-1. Extract ALL hidden elements (multiple detection methods)
-2. Probe common secret paths
-3. Analyze raw source code (Base64, hex, comments)
-4. Click everything interactive
-5. Recursive investigation of all discovered URLs
+1. Extract ALL hidden elements (7 detection methods)
+2. Probe 50+ common ARG paths
+3. Analyze raw source (Base64, hex, comments, data-* attributes)
+4. Execute and analyze JavaScript
+5. Check console messages for hidden clues
+6. Recursive investigation of discovered URLs
 
-**Browser Automation** (claude-in-chrome MCP): `read_page`, `javascript_tool`, `read_console_messages`, `navigate`
+**Browser Automation** (claude-in-chrome MCP):
+- `read_page` - Accessibility tree examination
+- `javascript_tool` - Inspect localStorage, sessionStorage, variables
+- `read_console_messages` - Hidden console.log clues
+- `navigate` - Follow discovered links
+- `computer` (screenshot) - Visual analysis
+
+**Recommends Next:** crypto-decoder (encoded content), osint-recon (new domains), stego-analyst (images)
 
 ---
 
@@ -162,13 +274,21 @@ Then use `claude-arg` to start Claude Code with ARG capabilities.
 
 ## Output Structure
 
+Each ARG investigation gets its own folder:
+
 ```
-~/Downloads/ARG_Investigation/
+~/Downloads/${ARG_NAME}_ARG_Investigation/
+├── clues/          # KEY FINDINGS - discovered secrets, decoded messages
 ├── reports/        # Auto-generated investigation reports
 ├── spectrograms/   # Audio spectrograms
 ├── extracted/      # Downloaded & extracted files
 └── logs/           # Raw analysis logs
 ```
+
+**Examples:**
+- `~/Downloads/cicada_ARG_Investigation/`
+- `~/Downloads/deltarune_ARG_Investigation/`
+- `~/Downloads/mysterious_ARG_Investigation/`
 
 ---
 
@@ -184,6 +304,32 @@ All agents document findings in real-time:
 | OSINT | `osint-*.md` | 🌐 📡 🔐 📜 🔗 👤 |
 | Forensics | `forensics-*.md` | 📁 📝 🔲 📖 ⚠️ 🔀 |
 | Web | `web-*.md` | 💬 👻 📊 🔗 📜 🖥️ 📦 |
+
+---
+
+## Agent Coordination
+
+Each agent ends its analysis with structured output:
+
+```markdown
+## 🔍 ANALYSIS COMPLETE
+
+### Findings Summary
+- [Key discoveries]
+
+### Files Created
+- $ARG_DIR/clues/[findings].txt
+
+### 🚀 RECOMMENDED NEXT AGENTS
+1. **crypto-decoder** - [WHY: Found Base64 in hidden element]
+2. **osint-recon** - [WHY: Discovered new subdomain]
+
+### Investigation Leads
+- [URLs to follow]
+- [Patterns to investigate]
+```
+
+Claude Code reads these recommendations and decides which agent to spawn next.
 
 ---
 
@@ -218,38 +364,25 @@ Add these permissions to `~/.claude/settings.json` for unrestricted web fetching
 
 ---
 
-## Architecture
-
-```
-User Request → ARG Orchestrator (opus)
-                      │
-                      │ INVESTIGATE FIRST
-                      │
-       ┌──────┬──────┬┴─────┬──────┐
-       ▼      ▼      ▼      ▼      ▼
-    Stego  Crypto  OSINT  Media   Web
-   (opus) (opus)  (opus) (opus) (opus)
-       │      │      │      │      │
-       └──────┴──────┴──────┴──────┘
-                      │
-                      ▼
-         ~/Downloads/ARG_Investigation/
-              (Real-time reports)
-```
-
----
-
-## Example
+## Example Investigation Flow
 
 ```bash
-# Investigate mysterious website (direct analysis, not search)
-/arg https://mysterious-arg.com
+# 1. Start with a mysterious website
+User: "Investigate https://mysterious-arg.com"
 
-# Decode suspicious text
-/decode VGhpcyBpcyBhIHNlY3JldA==
+# 2. Claude Code spawns web-analyst
+CC → web-analyst → Finds hidden Base64 in data-secret attribute
+                 → Recommends: crypto-decoder
 
-# Analyze image for hidden data
-/arg ~/Downloads/suspicious.png
+# 3. Claude Code spawns crypto-decoder
+CC → crypto-decoder → Decodes to URL: puzzle.mysterious-arg.com
+                    → Recommends: osint-recon, web-analyst
+
+# 4. Claude Code spawns osint-recon
+CC → osint-recon → Finds 5 subdomains via crt.sh
+                 → Recommends: web-analyst for each
+
+# 5. Investigation continues until puzzle is solved
 ```
 
 ---
@@ -263,10 +396,26 @@ User Request → ARG Orchestrator (opus)
 | Single-page analysis | **Recursive chain following** |
 | Manual path checking | **Automated 50+ path probing** |
 | Passive investigation | **Aggressive content analysis** |
+| Hierarchical orchestration | **Flat autonomous agents** |
+| Limited cipher support | **50+ cipher types** |
+| No ARG-specific ciphers | **Gaster, Standard Galactic, etc.** |
+
+---
+
+## Community Cross-Reference
+
+After completing their own investigation, agents cross-reference with:
+
+- **Reddit**: r/ARG, r/gamedetectives, r/codes, r/cicada
+- **Game Detectives Wiki**: wiki.gamedetectives.net
+- **ARGNet**: argn.com
+- **Unfiction**: forums.unfiction.com
+
+This identifies **novel discoveries** the community may have missed.
 
 ---
 
 **Author:** Kevin Lin
-**Version:** 1.1.0
+**Version:** 1.2.0
 
 *"The truth is out there... hidden in LSBs, spectrograms, and Base64."*
